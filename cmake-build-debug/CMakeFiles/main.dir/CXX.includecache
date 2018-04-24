@@ -1,0 +1,24 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/lexolordan/c++/StackAllocator/StackAllocator.cpp
+StackAllocator.h
+/Users/lexolordan/c++/StackAllocator/StackAllocator.h
+
+/Users/lexolordan/c++/StackAllocator/StackAllocator.h
+iostream
+-
+vector
+-
+
+/Users/lexolordan/c++/StackAllocator/main.cpp
+StackAllocator.h
+/Users/lexolordan/c++/StackAllocator/StackAllocator.h
+list
+-
+
