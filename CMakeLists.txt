@@ -3,5 +3,9 @@ project(StackAllocator)
 
 set(CMAKE_CXX_STANDARD 14)
 
-set(SOURCE_LIB StackAllocator.cpp main.cpp)
+enable_testing()
+
+include_directories(library)
+
+set(SOURCE_LIB main.cpp)
 add_executable(main ${SOURCE_LIB})

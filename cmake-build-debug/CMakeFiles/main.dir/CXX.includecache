@@ -6,19 +6,45 @@
 
 #IncludeRegexTransform: 
 
-/Users/lexolordan/c++/StackAllocator/StackAllocator.cpp
-StackAllocator.h
-/Users/lexolordan/c++/StackAllocator/StackAllocator.h
-
-/Users/lexolordan/c++/StackAllocator/StackAllocator.h
+../library/StackAllocator.h
 iostream
 -
-vector
+cassert
+-
+
+../library/iterator.h
+iostream
+-
+node.h
+../library/node.h
+
+../library/node.h
+iostream
+-
+
+../library/xor_list.h
+iostream
+-
+node.h
+../library/node.h
+iterator.h
+../library/iterator.h
+utility
+-
+memory
+-
+cassert
 -
 
 /Users/lexolordan/c++/StackAllocator/main.cpp
-StackAllocator.h
-/Users/lexolordan/c++/StackAllocator/StackAllocator.h
 list
 -
+iostream
+-
+random
+-
+xor_list.h
+/Users/lexolordan/c++/StackAllocator/xor_list.h
+StackAllocator.h
+/Users/lexolordan/c++/StackAllocator/StackAllocator.h
 

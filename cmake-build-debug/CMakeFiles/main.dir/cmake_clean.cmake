@@ -1,5 +1,4 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/main.dir/StackAllocator.cpp.o"
   "CMakeFiles/main.dir/main.cpp.o"
   "main.pdb"
   "main"

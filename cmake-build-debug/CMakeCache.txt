@@ -198,6 +198,9 @@ StackAllocator_LIB_DEPENDS:STATIC=
 //Value Computed by CMake
 StackAllocator_SOURCE_DIR:STATIC=/Users/lexolordan/c++/StackAllocator
 
+//Dependencies for target
+prog_LIB_DEPENDS:STATIC=
+
 
 ########################
 # INTERNAL cache entries

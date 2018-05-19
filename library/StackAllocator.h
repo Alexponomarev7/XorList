@@ -6,11 +6,12 @@
 
 class AllocatorNode {
 private:
-    static const size_t M_SIZE = 1e7;
-    size_t size;
-    char* current_memory;
+    static size_t _M_SIZE;
+
+    size_t _size;
+    char* _current_memory;
 public:
-    AllocatorNode *next;
+    std::shared_ptr<AllocatorNode> next;
 
     AllocatorNode();
     ~AllocatorNode();
@@ -34,30 +35,36 @@ public:
     struct rebind {
         typedef StackAllocator<U> other;
     };
+public:
+    std::shared_ptr<AllocatorNode>  _data;
 
     StackAllocator();
     ~StackAllocator();
 
-    StackAllocator(StackAllocator const&) = default;
-    StackAllocator& operator=(StackAllocator const&) = default;
+    template<class U>
+    StackAllocator(const StackAllocator<U>& other);
 
     pointer allocate(size_type n);
     void deallocate(pointer m, size_type n);
-private:
-    AllocatorNode* data;
 };
 
+size_t AllocatorNode::_M_SIZE = 1e7;
+
 template<class T>
-StackAllocator<T>::StackAllocator() {
-    data = new AllocatorNode();
-}
+template<class U>
+StackAllocator<T>::StackAllocator(const StackAllocator<U>& other) :
+        _data(other._data) {}
+
+template<class T>
+StackAllocator<T>::StackAllocator() : _data(std::make_shared<AllocatorNode>()) {}
 
 template<class T>
 StackAllocator<T>::~StackAllocator() {
-    while (data != nullptr) {
-        AllocatorNode* next = data;
-        data = data->next;
-        delete next;
+    while (_data != nullptr) {
+        std::shared_ptr<AllocatorNode> next = _data;
+        _data = _data->next;
+
+        next.reset();
     }
 }
 
@@ -65,38 +72,34 @@ template<class T>
 typename StackAllocator<T>::pointer StackAllocator<T>::allocate(StackAllocator<T>::size_type n) {
     StackAllocator<T>::size_type required_memory = sizeof(T) * n;
 
-    if (data->empty() < required_memory) {
-        AllocatorNode* new_data = new AllocatorNode();
-        new_data->next = data;
-        data = new_data;
+
+    if (_data->empty() < required_memory) {
+        auto new_data = std::make_shared<AllocatorNode>();
+        new_data->next = _data;
+        _data = new_data;
     }
 
-    return reinterpret_cast<pointer>(data->alloc(required_memory));
+    return reinterpret_cast<pointer>(_data->alloc(required_memory));
 }
 
 template<class T>
-void StackAllocator<T>::deallocate(StackAllocator<T>::pointer m, StackAllocator<T>::size_type n) {
-    return;
-}
+void StackAllocator<T>::deallocate(StackAllocator<T>::pointer m, StackAllocator<T>::size_type n) {}
 
-AllocatorNode::AllocatorNode() {
-    current_memory = new char[M_SIZE];
-    size = 0;
-}
+AllocatorNode::AllocatorNode() : _current_memory(new char[_M_SIZE]), _size(0), next(nullptr) {}
 
 AllocatorNode::~AllocatorNode() {
-    delete[] (current_memory - size);
+    delete[] (_current_memory - _size);
 }
 
 char* AllocatorNode::alloc(size_t required_memory) {
-    char* res = current_memory;
-    current_memory += required_memory;
-    size += required_memory;
+    char* res = _current_memory;
+    _current_memory += required_memory;
+    _size += required_memory;
     return res;
 }
 
 size_t AllocatorNode::empty() const {
-    return M_SIZE - size;
+    return _M_SIZE - _size;
 }
 
 #endif //STACKALLOCATOR_H

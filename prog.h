@@ -1,0 +1,6 @@
+#ifndef STACKALLOCATOR_PROG_H
+#define STACKALLOCATOR_PROG_H
+
+void f();
+
+#endif //STACKALLOCATOR_PROG_H

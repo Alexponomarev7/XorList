@@ -78,6 +78,17 @@ edit_cache/fast: edit_cache
 
 .PHONY : edit_cache/fast
 
+# Special rule for the target test
+test:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running tests..."
+	/Applications/CLion.app/Contents/bin/cmake/bin/ctest --force-new-ctest-process $(ARGS)
+.PHONY : test
+
+# Special rule for the target test
+test/fast: test
+
+.PHONY : test/fast
+
 # The main all target
 all: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start /Users/lexolordan/c++/StackAllocator/cmake-build-debug/CMakeFiles /Users/lexolordan/c++/StackAllocator/cmake-build-debug/CMakeFiles/progress.marks
@@ -123,33 +134,6 @@ main/fast:
 	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/build
 .PHONY : main/fast
 
-StackAllocator.o: StackAllocator.cpp.o
-
-.PHONY : StackAllocator.o
-
-# target to build an object file
-StackAllocator.cpp.o:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/StackAllocator.cpp.o
-.PHONY : StackAllocator.cpp.o
-
-StackAllocator.i: StackAllocator.cpp.i
-
-.PHONY : StackAllocator.i
-
-# target to preprocess a source file
-StackAllocator.cpp.i:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/StackAllocator.cpp.i
-.PHONY : StackAllocator.cpp.i
-
-StackAllocator.s: StackAllocator.cpp.s
-
-.PHONY : StackAllocator.s
-
-# target to generate assembly for a file
-StackAllocator.cpp.s:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/StackAllocator.cpp.s
-.PHONY : StackAllocator.cpp.s
-
 main.o: main.cpp.o
 
 .PHONY : main.o
@@ -185,10 +169,8 @@ help:
 	@echo "... depend"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
+	@echo "... test"
 	@echo "... main"
-	@echo "... StackAllocator.o"
-	@echo "... StackAllocator.i"
-	@echo "... StackAllocator.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
